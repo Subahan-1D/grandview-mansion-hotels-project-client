@@ -75,7 +75,7 @@ const Login = () => {
 
           <p>Continue with Google</p>
         </div>
-        <p className='px-6 text-sm text-center text-gray-400'>
+        <p className='px-6 text-sm text-center text-gray-500'>
           Don&apos;t have an account yet?{' '}
           <Link
             to='/signup'
