@@ -1,24 +1,29 @@
-import { useEffect, useState } from 'react'
+
 import Card from './Card'
 import Container from '../Shared/Container'
 import Heading from '../Shared/Heading'
 import LoadingSpinner from '../Shared/LoadingSpinner'
+import { useQuery } from '@tanstack/react-query'
+import useAxiosSecure from '../../hooks/useAxiosSecure'
+import { useSearchParams } from 'react-router-dom'
 
 const Rooms = () => {
-  const [rooms, setRooms] = useState([])
-  const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    setLoading(true)
-    fetch("http://localhost:8000/rooms")
-      .then((res) => res.json())
-      .then((data) => {
-        setRooms(data);
-        setLoading(false);
-      });
-  }, [])
+  const axiosSecure = useAxiosSecure();
+  const [params,setParams] = useSearchParams();
+  const category = params.get('category')
+  console.log(category)
 
-  if (loading) return <LoadingSpinner />
+  const {data : rooms =[],isLoading} = useQuery({
+    queryKey:['rooms', category],
+    queryFn: async() =>{
+      const {data} = await  axiosSecure.get(`/rooms?category=${category}`)
+      return data
+    }
+  })
+
+
+  if (isLoading) return <LoadingSpinner />
 
   return (
     <Container>
