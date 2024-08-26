@@ -6,7 +6,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import useAxiosCommon from "../../hooks/useAxiosCommon";
+import useAuth from "../../hooks/useAuth";
 const RoomDetails = () => {
+  const {user} = useAuth()
   const { id } = useParams();
   const axiosCommon = useAxiosCommon()
 
