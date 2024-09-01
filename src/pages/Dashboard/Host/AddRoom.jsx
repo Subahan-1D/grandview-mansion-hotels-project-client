@@ -9,10 +9,10 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const AddRoom = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(false);
-  const { user } = useAuth();
   const [imagePreview, setImagePreview] = useState();
   const [imageText, setImageText] = useState("Upload Image");
   const [dates, setDates] = useState({
@@ -27,12 +27,6 @@ const AddRoom = () => {
     setDates(item.selection);
   };
 
-  // handle image change
-  const handleImage = (image) => {
-    setImagePreview(URL.createObjectURL(image));
-    setImageText(image.name);
-  };
-
   const { mutateAsync } = useMutation({
     mutationFn: async (roomData) => {
       const { data } = await axiosSecure.post(`/room`, roomData);
@@ -40,10 +34,9 @@ const AddRoom = () => {
     },
     onSuccess: () => {
       console.log("Data Save Successfully");
-      toast.success('Room Added Successfully!')
-      navigate("/my-listings");
+      toast.success("Room Added Successfully!");
+      navigate("/dashboard/my-listings");
       setLoading(false);
-      
     },
   });
 
@@ -87,13 +80,20 @@ const AddRoom = () => {
       };
       console.table(roomData);
       // post request server
-      await mutateAsync(roomData);
+      await mutateAsync(roomData)
     } catch (err) {
       console.log(err)
       toast.error(err.message);
       setLoading(false);
     }
   };
+
+  // handle image change
+  const handleImage = (image) => {
+    setImagePreview(URL.createObjectURL(image));
+    setImageText(image.name);
+  };
+
   return (
     <>
       <Helmet>

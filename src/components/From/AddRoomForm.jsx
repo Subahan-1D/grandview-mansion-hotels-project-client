@@ -10,7 +10,7 @@ const AddRoomForm = ({
   imagePreview,
   handleImage,
   imageText,
-  loading,
+  loading
 }) => {
   const [state, setState] = useState([
     {
