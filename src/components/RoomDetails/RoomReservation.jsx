@@ -31,7 +31,7 @@ const RoomReservation = ({ room }) => {
 
         <DateRange
           showDateDisplay={false}
-          rangeColors={["#f43f5e"]}
+          rangeColors={["#3f72f4"]}
           onChange={(item) => {
             console.log(item);
             setState([
