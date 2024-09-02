@@ -1,18 +1,18 @@
 import { useState } from "react";
-import AddRoomForm from "../../../components/From/AddRoomForm";
-import useAuth from "../../../hooks/useAuth";
-import { uploadImage } from "../../../api/utils";
 import { Helmet } from "react-helmet-async";
 import { useMutation } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
+import { uploadImage } from "../../../api/utils";
+import AddRoomForm from "../../../components/From/AddRoomForm";
 
 const AddRoom = () => {
-  const { user } = useAuth();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
   const [imagePreview, setImagePreview] = useState();
   const [imageText, setImageText] = useState("Upload Image");
   const [dates, setDates] = useState({
@@ -21,9 +21,8 @@ const AddRoom = () => {
     key: "selection",
   });
 
-  // Date Range Handle dates
+  //Date range handler
   const handleDates = (item) => {
-    console.log(item);
     setDates(item.selection);
   };
 
@@ -33,14 +32,14 @@ const AddRoom = () => {
       return data;
     },
     onSuccess: () => {
-      console.log("Data Save Successfully");
+      console.log("Data Saved Successfully");
       toast.success("Room Added Successfully!");
       navigate("/dashboard/my-listings");
       setLoading(false);
     },
   });
 
-  // From handler
+  //   Form handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -50,17 +49,19 @@ const AddRoom = () => {
     const title = form.title.value;
     const to = dates.endDate;
     const from = dates.startDate;
-    const quest = form.total_guest.value;
-    const image = form.image.files[0];
     const price = form.price.value;
-    const bedrooms = form.bedrooms.value;
+    const guests = form.total_guest.value;
     const bathrooms = form.bathrooms.value;
     const description = form.description.value;
+    const bedrooms = form.bedrooms.value;
+    const image = form.image.files[0];
+
     const host = {
-      email: user?.email,
       name: user?.displayName,
-      photo: user?.photoURL,
+      image: user?.photoURL,
+      email: user?.email,
     };
+
     try {
       const image_url = await uploadImage(image);
       const roomData = {
@@ -69,26 +70,26 @@ const AddRoom = () => {
         title,
         to,
         from,
-        quest,
-        bedrooms,
-        form,
         price,
+        guests,
         bathrooms,
-        description,
+        bedrooms,
         host,
+        description,
         image: image_url,
       };
       console.table(roomData);
-      // post request server
-      await mutateAsync(roomData)
+
+      //   Post request to server
+      await mutateAsync(roomData);
     } catch (err) {
-      console.log(err)
+      console.log(err);
       toast.error(err.message);
       setLoading(false);
     }
   };
 
-  // handle image change
+  //   handle image change
   const handleImage = (image) => {
     setImagePreview(URL.createObjectURL(image));
     setImageText(image.name);
@@ -99,7 +100,8 @@ const AddRoom = () => {
       <Helmet>
         <title>Add Room | Dashboard</title>
       </Helmet>
-      {/* From */}
+
+      {/* Form */}
       <AddRoomForm
         dates={dates}
         handleDates={handleDates}
@@ -109,7 +111,7 @@ const AddRoom = () => {
         handleImage={handleImage}
         imageText={imageText}
         loading={loading}
-      ></AddRoomForm>
+      />
     </>
   );
 };
