@@ -10,10 +10,12 @@ import MenuItem from "./Menu/MenuItem";
 import HostMenu from "./Menu/HostMenu";
 import GuestMenu from './Menu/GuestMenu'
 import AdminMenu from "./Menu/AdminMenu";
+import ToggleBtn from "../../Shared/Button/ToggleBtn";
 
 const Sidebar = () => {
   const { logOut } = useAuth();
   const [isActive, setActive] = useState(false);
+  const [toggle,setToggle] = useState(true)
   const [role, isLoading] = useRole();
   console.log(role, isLoading);
 
@@ -21,6 +23,11 @@ const Sidebar = () => {
   const handleToggle = () => {
     setActive(!isActive);
   };
+
+  const toggleHandler =  event =>{
+    console.log(event.target.checked)
+    setToggle(event.target.checked);
+  }
   return (
     <>
       {/* Small Screen Navbar */}
@@ -65,7 +72,7 @@ const Sidebar = () => {
                   height="100"
                 /> */}
                 <h1 className="text-3xl text-red-700 text-center">
-                  Room <span className="text-blue-700"> Management</span>
+                  Hotel <span className="text-blue-700"> Management</span>
                 </h1>
               </Link>
             </div>
@@ -74,6 +81,9 @@ const Sidebar = () => {
           {/* Nav Items */}
           <div className="flex flex-col justify-between flex-1 mt-6">
             {/* Conditional toggle button here.. */}
+            {role === "host" && (
+              <ToggleBtn toggleHandler={toggleHandler} toggle={toggle}></ToggleBtn>
+            )}
 
             {/*  Menu Items */}
             <nav>
@@ -86,7 +96,7 @@ const Sidebar = () => {
 
               {role === "guest" && <GuestMenu></GuestMenu>}
               {role === "admin" && <AdminMenu></AdminMenu>}
-              {role === "host" && <HostMenu></HostMenu>}
+              {role === "host" ? toggle ? <HostMenu></HostMenu> : <GuestMenu></GuestMenu> : undefined}
             </nav>
           </div>
         </div>

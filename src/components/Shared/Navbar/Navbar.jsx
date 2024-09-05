@@ -61,7 +61,7 @@ const Navbar = () => {
                   height="100"
                 />
                 <h1 className="text-3xl text-red-700">
-                  Room <span className="text-blue-700"> Management</span>
+                  Hotel <span className="text-blue-700"> Management</span>
                 </h1>
               </div>
             </Link>
