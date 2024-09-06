@@ -11,6 +11,7 @@ react-date-range package implementation in Room Details Page.
 Registration Page & Functionality.
 Image upload using api (IMGBB).
 Login Page & Functionality.
+
 Part2
 
 Dashboard Layout
