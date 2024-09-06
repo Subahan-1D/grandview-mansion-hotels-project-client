@@ -105,7 +105,9 @@ export const router = createBrowserRouter([
         path: "manage-bookings",
         element: (
           <PrivateRoute>
-            <ManageBookings></ManageBookings>
+            <HostRoute>
+              <ManageBookings></ManageBookings>
+            </HostRoute>
           </PrivateRoute>
         ),
       },
