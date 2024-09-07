@@ -77,7 +77,7 @@ const BookingModal = ({ closeModal, isOpen, bookingInfo }) => {
                 <hr className="mt-8 " />
                 {/* checkout form */}
                 <Elements stripe={stripePromise}>
-                  <CheckoutForm closeModal={closeModal}/>
+                  <CheckoutForm closeModal={closeModal} bookingInfo={bookingInfo}/>
                 </Elements>
               </DialogPanel>
             </TransitionChild>
