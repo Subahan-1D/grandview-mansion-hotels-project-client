@@ -13,7 +13,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../From/CheckoutForm";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-const BookingModal = ({ closeModal, isOpen, bookingInfo }) => {
+const BookingModal = ({ closeModal, isOpen, bookingInfo , refetch }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -77,7 +77,7 @@ const BookingModal = ({ closeModal, isOpen, bookingInfo }) => {
                 <hr className="mt-8 " />
                 {/* checkout form */}
                 <Elements stripe={stripePromise}>
-                  <CheckoutForm closeModal={closeModal} bookingInfo={bookingInfo}/>
+                  <CheckoutForm refetch={refetch} closeModal={closeModal} bookingInfo={bookingInfo} />
                 </Elements>
               </DialogPanel>
             </TransitionChild>

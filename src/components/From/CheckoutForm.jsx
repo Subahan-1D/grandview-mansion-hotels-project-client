@@ -5,12 +5,16 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { ImSpinner9 } from "react-icons/im";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
-const CheckoutForm = ({ closeModal, bookingInfo }) => {
+
+const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
   const stripe = useStripe();
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const navigate = useNavigate()
 
   // payment function 1st
 
@@ -91,14 +95,28 @@ const CheckoutForm = ({ closeModal, bookingInfo }) => {
       //1st create payment info
       const paymentInfo = {
         ...bookingInfo,
+        roomId: bookingInfo._id,
         transitionId: paymentIntent.id,
         date: new Date(),
       };
+      delete paymentInfo._id;
       console.log(paymentInfo);
-      setProcessing(false)
+      // 2nd save payment info and booking collection
+      try {
+        const { data } = await axiosSecure.post("/booking", paymentInfo);
+        console.log(data);
+        //  3rd change room status from booked db
+        await axiosSecure.patch(`/room/status/${bookingInfo._id}`,{status: true})
+        // update ui
+        refetch();
+        closeModal();
+        toast.success('Room Book Successfully! ') 
+        navigate('/dashboard/my-bookings')
+      } catch (err) {
+        console.log(err);
+      }
     }
-    // 2nd save payment info and booking collection
-    
+    setProcessing(false);
   };
 
   return (
@@ -132,9 +150,9 @@ const CheckoutForm = ({ closeModal, bookingInfo }) => {
                 className="animate-spin m-auto"
                 size={20}
               ></ImSpinner9>
-            ) : 
+            ) : (
               `Pay ${bookingInfo?.price}`
-            }
+            )}
           </button>
           <button
             type="button"
