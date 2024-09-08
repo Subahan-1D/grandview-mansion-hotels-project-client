@@ -8,14 +8,14 @@ import { Link } from "react-router-dom";
 import useRole from "../../../hooks/useRole";
 import MenuItem from "./Menu/MenuItem";
 import HostMenu from "./Menu/HostMenu";
-import GuestMenu from './Menu/GuestMenu'
+import GuestMenu from "./Menu/GuestMenu";
 import AdminMenu from "./Menu/AdminMenu";
 import ToggleBtn from "../../Shared/Button/ToggleBtn";
 
 const Sidebar = () => {
   const { logOut } = useAuth();
   const [isActive, setActive] = useState(false);
-  const [toggle,setToggle] = useState(true)
+  const [toggle, setToggle] = useState(true);
   const [role, isLoading] = useRole();
   console.log(role, isLoading);
 
@@ -24,10 +24,10 @@ const Sidebar = () => {
     setActive(!isActive);
   };
 
-  const toggleHandler =  event =>{
-    console.log(event.target.checked)
+  const toggleHandler = (event) => {
+    console.log(event.target.checked);
     setToggle(event.target.checked);
-  }
+  };
   return (
     <>
       {/* Small Screen Navbar */}
@@ -37,7 +37,7 @@ const Sidebar = () => {
             <Link to="/">
               <img
                 // className='hidden md:block'
-                src="https://i.ibb.co/4ZXzmq5/logo.png"
+                src="https://i.ibb.co.com/Gx8J8HM/images.jpg"
                 alt="logo"
                 width="100"
                 height="100"
@@ -64,16 +64,21 @@ const Sidebar = () => {
           <div>
             <div className="w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-rose-100 mx-auto">
               <Link to="/">
-                {/* <img
-                  // className='hidden md:block'
-                  src="https://i.ibb.co/4ZXzmq5/logo.png"
-                  alt="logo"
-                  width="100"
-                  height="100"
-                /> */}
-                <h1 className="text-3xl text-red-700 text-center">
-                  Hotel <span className="text-blue-700"> Management</span>
-                </h1>
+                <div className="flex">
+                  <img
+                    className="w-15 h-20 rounded-lg mr-2 lg:mt-3 -ml-3"
+                    // className='hidden md:block'
+                    src="https://i.ibb.co.com/Gx8J8HM/images.jpg"
+                    alt="logo"
+                    width="100"
+                    height="100"
+                  />
+
+                  <h1 className="text-2xl text-red-700">
+                    Grandview{" "}
+                    <span className="text-blue-700"> Mansion Hotels</span>
+                  </h1>
+                </div>
               </Link>
             </div>
           </div>
@@ -82,7 +87,10 @@ const Sidebar = () => {
           <div className="flex flex-col justify-between flex-1 mt-6">
             {/* Conditional toggle button here.. */}
             {role === "host" && (
-              <ToggleBtn toggleHandler={toggleHandler} toggle={toggle}></ToggleBtn>
+              <ToggleBtn
+                toggleHandler={toggleHandler}
+                toggle={toggle}
+              ></ToggleBtn>
             )}
 
             {/*  Menu Items */}
@@ -96,7 +104,13 @@ const Sidebar = () => {
 
               {role === "guest" && <GuestMenu></GuestMenu>}
               {role === "admin" && <AdminMenu></AdminMenu>}
-              {role === "host" ? toggle ? <HostMenu></HostMenu> : <GuestMenu></GuestMenu> : undefined}
+              {role === "host" ? (
+                toggle ? (
+                  <HostMenu></HostMenu>
+                ) : (
+                  <GuestMenu></GuestMenu>
+                )
+              ) : undefined}
             </nav>
           </div>
         </div>

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import { uploadImage } from "../../../api/utils";
-import AddRoomForm from "../../../components/From/AddRoomForm";
+import AddRoomForm from "../../../components/Form/AddRoomForm";
 
 const AddRoom = () => {
   const navigate = useNavigate();

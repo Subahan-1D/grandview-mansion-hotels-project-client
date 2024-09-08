@@ -45,7 +45,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="fixed w-full bg-white z-10 shadow-sm"> 
+    <div className="fixed w-full bg-white z-10 shadow-sm">
       <div className="py-4 border-b-[1px]">
         <Container>
           <div className="flex flex-row  items-center justify-between gap-3 md:gap-0">
@@ -53,15 +53,17 @@ const Navbar = () => {
             <Link to="/">
               <div className="flex">
                 <img
-                  className="w-10 h-10 rounded-lg mr-2"
+                  className="w-12 h-12 rounded-lg mr-2"
                   // className='hidden md:block'
-                  src="https://i.ibb.co/9sdbdF7/roomlogo.jpg"
+                  src="https://i.ibb.co.com/Gx8J8HM/images.jpg"
                   alt="logo"
                   width="100"
                   height="100"
                 />
-                <h1 className="text-3xl text-red-700">
-                  Hotel <span className="text-blue-700"> Management</span>
+
+                <h1 className="text-3xl mt-2 text-red-700">
+                  Grandview{" "}
+                  <span className="text-blue-700"> Mansion Hotels</span>
                 </h1>
               </div>
             </Link>
@@ -76,7 +78,7 @@ const Navbar = () => {
                     onClick={() => setIsModalOpen(true)}
                     className="disabled:cursor-not-allowed cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full  transition"
                   >
-                    Host your home
+                    Request to be a host
                   </button>
                   {/* )} */}
                 </div>

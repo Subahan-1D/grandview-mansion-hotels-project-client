@@ -6,9 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import useAxiosCommon from "../../hooks/useAxiosCommon";
-import useAuth from "../../hooks/useAuth";
 const RoomDetails = () => {
-  const {user} = useAuth()
   const { id } = useParams();
   const axiosCommon = useAxiosCommon()
 
@@ -62,6 +60,7 @@ const RoomDetails = () => {
                     height="30"
                     width="30"
                     alt="Avatar"
+                    referrerPolicy="no-referrer"
                     src={room?.host?.image}
                   />
                 </div>
