@@ -9,9 +9,12 @@ import {
 import { Fragment, useState } from "react";
 import UpdateRoomForm from "../Form/UpdateRoomForm";
 import { uploadImage } from "../../api/utils";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const UpdateRoomModal = ({ setIsEditModalOpen, isOpen, room, refetch }) => {
   const [loading, setLoading] = useState(false);
+  const axiosSecure = useAxiosSecure();
   const [roomData, setRoomData] = useState(room);
   const [dates, setDates] = useState({
     startDate: new Date(room?.from),
@@ -21,6 +24,7 @@ const UpdateRoomModal = ({ setIsEditModalOpen, isOpen, room, refetch }) => {
   //Date range handler
   const handleDates = (item) => {
     setDates(item.selection);
+    setRoomData({...roomData, to:item.selection.endDate , from:item.selection.startDate})
   };
   // handle Image Update
   const handleImage = async (image) => {
@@ -35,10 +39,26 @@ const UpdateRoomModal = ({ setIsEditModalOpen, isOpen, room, refetch }) => {
     }
   };
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
-    const updatedRoomData = object.assign({}, roomData);
+    const updatedRoomData = Object.assign({}, roomData);
     delete updatedRoomData._id;
     console.log(updatedRoomData);
+    try {
+      const { data } = await axiosSecure.put(
+        `/room/update/${room?._id}`,
+        updatedRoomData
+      );
+      console.log(data);
+      refetch();
+      setIsEditModalOpen(false)
+      setLoading(false);
+      toast.success("Update RoomData Successfully!");
+    } catch (err) {
+      console.log(err);
+      setLoading(false)
+      toast.error(err.message);
+    }
   };
   return (
     <Transition appear show={isOpen} as={Fragment}>
