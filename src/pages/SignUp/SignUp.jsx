@@ -137,6 +137,15 @@ const SignUp = () => {
               )}
             </button>
           </div>
+
+          <div>
+            <button
+              type="submit"
+              className="bg-black w-full rounded-md py-3 text-white"
+            >
+              <Link to="/">Cancle</Link>
+            </button>
+          </div>
         </form>
         <div className="flex items-center pt-4 space-x-1">
           <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
