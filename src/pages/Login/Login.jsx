@@ -119,7 +119,7 @@ const Login = () => {
               type="submit"
               className="bg-black w-full rounded-md py-3 text-white"
             >
-            <Link to="/">Cancle</Link>
+            <Link to="/">Cancel</Link>
             </button>
           </div>
         </form>
